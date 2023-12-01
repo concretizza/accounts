@@ -137,3 +137,36 @@ stripe listen --forward-to http://localhost:8000/api/payments/stripe/webhooks
 ## Email server
 
 https://github.com/axllent/mailpit
+
+## Tags
+
+Create a tag
+```sh
+git tag v0.0.1
+```
+
+Tag with comment
+```sh
+git tag -a v0.0.1 -m "Account, users and subscriptions"
+```
+
+Push the tag
+```sh
+git push origin v0.0.1
+```
+
+Push all at once
+```sh
+git push origin --tags
+```
+
+Show all or specific tag
+```sh
+git tag
+git show v0.0.1
+```
+
+Delete tag
+```sh
+git tag -d v0.0.1
+```
