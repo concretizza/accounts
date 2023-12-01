@@ -23,7 +23,7 @@ class StripeCheckoutsController extends Controller
                 ->first();
             $customerId = $setting->value ?? null;
 
-            if (!$customerId) {
+            if (! $customerId) {
                 return response()->json([
                     'message' => trans('payment.checkout_customer_bad_request'),
                 ], Response::HTTP_BAD_REQUEST);
@@ -72,8 +72,8 @@ class StripeCheckoutsController extends Controller
                     'quantity' => 1,
                 ],
             ],
-            'success_url' => config('app.client_url') . '/subscriptions/success',
-            'cancel_url' => config('app.client_url') . '/subscriptions/cancel',
+            'success_url' => config('app.client_url').'/subscriptions/success',
+            'cancel_url' => config('app.client_url').'/subscriptions/cancel',
         ]);
 
         return $checkoutSession->url;

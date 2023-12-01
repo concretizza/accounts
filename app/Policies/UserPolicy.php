@@ -8,7 +8,7 @@ class UserPolicy
 {
     public function change(User $user, User $member): bool
     {
-        if (!$user->account->users()->count()) {
+        if (! $user->account->users()->count()) {
             return false;
         }
 

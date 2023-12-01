@@ -82,7 +82,7 @@ class UserTest extends TestCase
         $this->createSubscription($user->account);
         $name = $this->faker->name;
 
-        $response = $this->actingAs($user)->json('PUT', '/api/users/' . $user->id, ['name' => $name]);
+        $response = $this->actingAs($user)->json('PUT', '/api/users/'.$user->id, ['name' => $name]);
         $response->assertStatus(Response::HTTP_OK);
 
         $this->assertDatabaseHas('users', [
@@ -113,7 +113,7 @@ class UserTest extends TestCase
 
         $this->assertDatabaseHas('users', $userCheck);
 
-        $response = $this->actingAs($user)->json('DELETE', '/api/users/' . $id);
+        $response = $this->actingAs($user)->json('DELETE', '/api/users/'.$id);
         $response->assertStatus(Response::HTTP_NO_CONTENT);
 
         $this->assertDatabaseMissing('users', $userCheck);

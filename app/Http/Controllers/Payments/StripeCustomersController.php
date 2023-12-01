@@ -23,7 +23,7 @@ class StripeCustomersController extends Controller
             ->byKey(AccountSettingsEnum::STRIPE_CUSTOMER_ID->value)
             ->first();
         $customerId = $customer->value ?? null;
-        
+
         $stripe = new StripeClient(config('services.stripe.secret'));
         $session = $stripe->billingPortal->sessions->create([
             'customer' => $customerId,

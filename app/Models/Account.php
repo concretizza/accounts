@@ -38,9 +38,10 @@ class Account extends Model
     public function countActiveSubscription(): int
     {
         $subscription = $this->subscriptions();
-        if (!$subscription) {
+        if (! $subscription) {
             return 0;
         }
+
         return $subscription->isActive()->count();
     }
 

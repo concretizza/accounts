@@ -25,6 +25,7 @@ class UsersController extends Controller
     {
         $user = $request->user();
         $users = User::where('account_id', $user->account_id)->orderBy('name')->paginate();
+
         return response()->json([
             'users' => $users,
         ]);

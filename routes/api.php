@@ -7,7 +7,6 @@ use App\Http\Controllers\Payments\StripeCheckoutsController;
 use App\Http\Controllers\Payments\StripeCustomersController;
 use App\Http\Controllers\Payments\StripeSubscriptionsController;
 use App\Http\Controllers\Payments\StripeWebHooksController;
-use App\Http\Controllers\PlansController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 

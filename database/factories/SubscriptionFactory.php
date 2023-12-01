@@ -18,8 +18,8 @@ class SubscriptionFactory extends Factory
     public function definition(): array
     {
         return [
-            'stripe_id' => 'sub_' . Str::uuid(),
-            'stripe_price' => 'price_' . Str::uuid(),
+            'stripe_id' => 'sub_'.Str::uuid(),
+            'stripe_price' => 'price_'.Str::uuid(),
             'stripe_status' => 'active',
             'ends_at' => now()->addMonth(),
         ];
