@@ -29,7 +29,7 @@ php artisan storage:link
 To create the tables
 
 ```sh
-php artisan migrate:fresh --seed
+php artisan migrate
 ```
 
 It will recreate and populate the tables

@@ -84,7 +84,7 @@
         <div class="footer">
             <p>
                 &copy; {{ date('Y') }}
-                <a href="https://musedoc.com">{{ config('app.name') }}</a>
+                <a href="https://musedoc.app">{{ config('app.name') }}</a>
                 {{ trans('common.copyright') }}
             </p>
             <p><a href="#">{{ trans('mail.unsubscribe') }}</a></p>
