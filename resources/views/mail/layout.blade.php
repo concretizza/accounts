@@ -75,7 +75,7 @@
 <body>
     <div class="container">
         <div class="header">
-            musedoc.
+            concretizza.
         </div>
         <div class="body">
             @yield('content')
@@ -84,7 +84,7 @@
         <div class="footer">
             <p>
                 &copy; {{ date('Y') }}
-                <a href="https://musedoc.app">{{ config('app.name') }}</a>
+                <a href="https://concretizza.com">{{ config('app.name') }}</a>
                 {{ trans('common.copyright') }}
             </p>
             <p><a href="#">{{ trans('mail.unsubscribe') }}</a></p>

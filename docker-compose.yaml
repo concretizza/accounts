@@ -6,7 +6,7 @@ services:
     restart: unless-stopped
     tty: true
     environment:
-      POSTGRES_DB: musedoc
+      POSTGRES_DB: concretizza
       POSTGRES_USER: root
       POSTGRES_PASSWORD: 4321
     ports:
