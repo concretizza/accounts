@@ -45,7 +45,7 @@ class StripeCheckoutTest extends TestCase
 
         $response = $this->actingAs($userCreated)->json(
             'POST',
-            '/api/payments/stripe/checkouts',
+            '/api/payments/stripe/checkouts/subscriptions',
             ['price_id' => self::PRICE_ID],
         );
 
@@ -60,7 +60,7 @@ class StripeCheckoutTest extends TestCase
         $user = $this->createUser();
         $response = $this->actingAs($user)->json(
             'POST',
-            '/api/payments/stripe/checkouts',
+            '/api/payments/stripe/checkouts/subscriptions',
             []
         );
 

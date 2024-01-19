@@ -38,6 +38,7 @@ return [
         'refresh_url' => env('STRIPE_REFRESH_URL'),
         'return_url' => env('STRIPE_RETURN_URL'),
         'test_clock_id' => env('STRIPE_TEST_CLOCK_ID'),
+        'currency' => env('STRIPE_CURRENCY'),
     ],
 
 ];

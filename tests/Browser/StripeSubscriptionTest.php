@@ -39,7 +39,7 @@ class StripeSubscriptionTest extends DuskTestCase
 
         $response = $this->actingAs($userCreated)->json(
             'POST',
-            '/api/payments/stripe/checkouts',
+            '/api/payments/stripe/checkouts/subscriptions',
             ['price_id' => self::PRICE_ID],
         );
 
@@ -96,7 +96,7 @@ class StripeSubscriptionTest extends DuskTestCase
 
         $response = $this->actingAs($userCreated)->json(
             'POST',
-            '/api/payments/stripe/checkouts',
+            '/api/payments/stripe/checkouts/subscriptions',
             ['price_id' => self::PRICE_ID],
         );
 

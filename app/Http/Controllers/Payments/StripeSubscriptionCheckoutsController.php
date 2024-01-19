@@ -3,14 +3,17 @@
 namespace App\Http\Controllers\Payments;
 
 use App\Enums\AccountSettingsEnum;
+use App\Enums\CheckoutSessionModeEnum;
 use App\Http\Controllers\Controller;
+use App\Services\StripeService;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
-use Stripe\Checkout\Session;
+use Stripe\Exception\InvalidRequestException;
 use Stripe\Stripe;
 
-class StripeCheckoutsController extends Controller
+class StripeSubscriptionCheckoutsController extends Controller
 {
     public function create(Request $request)
     {
@@ -36,10 +39,17 @@ class StripeCheckoutsController extends Controller
             }
 
             $priceId = $request->input('price_id');
-            $checkoutUrl = $this->createSessionUrl($customerId, $priceId);
+            $checkoutUrl = StripeService::createSessionUrl(
+                CheckoutSessionModeEnum::SUB,
+                $customerId,
+                $priceId,
+                1,
+            );
 
-            return response()->json(['url' => $checkoutUrl], Response::HTTP_CREATED);
-        } catch (\Stripe\Exception\InvalidRequestException $e) {
+            return response()->json([
+                'url' => $checkoutUrl,
+            ], Response::HTTP_CREATED);
+        } catch (InvalidRequestException $e) {
             Log::warning('stripe checkout invalid request: {code}: {message}', [
                 'code' => $e->getCode(),
                 'message' => $e->getMessage(),
@@ -48,7 +58,7 @@ class StripeCheckoutsController extends Controller
             return response()->json([
                 'message' => trans('payment.checkout_price_bad_request'),
             ], Response::HTTP_BAD_REQUEST);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::error('stripe checkout: {code}: {message}', [
                 'code' => $e->getCode(),
                 'message' => $e->getMessage(),
@@ -58,24 +68,5 @@ class StripeCheckoutsController extends Controller
                 'message' => trans('payment.checkout_failed'),
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
-    }
-
-    public function createSessionUrl(string $customerId, string $priceId): string
-    {
-        $checkoutSession = Session::create([
-            'mode' => 'subscription',
-            'customer' => $customerId,
-            'currency' => 'USD',
-            'line_items' => [
-                [
-                    'price' => $priceId,
-                    'quantity' => 1,
-                ],
-            ],
-            'success_url' => config('app.client_url').'/subscriptions/success',
-            'cancel_url' => config('app.client_url').'/subscriptions/cancel',
-        ]);
-
-        return $checkoutSession->url;
     }
 }

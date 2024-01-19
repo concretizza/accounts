@@ -1,6 +1,15 @@
 {
-    "cSpell.words": [
-        "Assertable",
-        "Mailpit"
+    "cSpell.words": ["Assertable", "Mailpit"],
+    "editor.rulers": [
+        {
+            "column": 80,
+        },
+        {
+            "column": 100,
+            "color": "#008cff"
+        },
+        {
+            "column": 120,
+        }
     ]
 }

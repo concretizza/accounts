@@ -39,7 +39,8 @@ class SubscriptionTest extends TestCase
         $user->refresh();
         $this->assertTrue($user->account->hasActiveSubscription());
         $this->assertEquals(1, $user->account->countActiveSubscription());
-        $this->assertEquals($plans['name'], $user->account->currentPlan()['name']);
+        $currentPlan = $user->account->currentPlan();
+        $this->assertEquals($plans[$price_id]['name'], $currentPlan['name']);
     }
 
     public function test_no_plan(): void

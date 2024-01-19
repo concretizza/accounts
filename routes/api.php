@@ -1,10 +1,9 @@
 <?php
 
-use App\Http\Controllers\ArticlesController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\Payments\StripeCheckoutsController;
 use App\Http\Controllers\Payments\StripeCustomersController;
+use App\Http\Controllers\Payments\StripeSubscriptionCheckoutsController;
 use App\Http\Controllers\Payments\StripeSubscriptionsController;
 use App\Http\Controllers\Payments\StripeWebHooksController;
 use App\Http\Controllers\UsersController;
@@ -31,13 +30,11 @@ Route::post('/payments/stripe/webhooks', [StripeWebHooksController::class, 'hand
 Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::get('/users/me', [UsersController::class, 'show']);
     Route::delete('/logout', [AuthController::class, 'logout']);
-    Route::post('/payments/stripe/checkouts', [StripeCheckoutsController::class, 'create']);
+    Route::post('/payments/stripe/checkouts/subscriptions', [
+        StripeSubscriptionCheckoutsController::class, 'create',
+    ]);
     Route::post('/payments/stripe/subscriptions/{id}/refunds', [StripeSubscriptionsController::class, 'refund']);
     Route::get('/dashboard', [DashboardController::class, 'index']);
-    Route::get('/articles/{id}', [ArticlesController::class, 'show']);
-    Route::put('/articles/{id}', [ArticlesController::class, 'update']);
-    Route::post('/articles', [ArticlesController::class, 'store']);
-    Route::get('/articles', [ArticlesController::class, 'index']);
     Route::get('/users', [UsersController::class, 'index']);
     Route::put('/users/{id}', [UsersController::class, 'update']);
 

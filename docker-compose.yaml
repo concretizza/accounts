@@ -1,18 +1,17 @@
 version: "3"
 services:
   db:
-    image: ankane/pgvector
+    image: mariadb:11.2
     container_name: db
     restart: unless-stopped
     tty: true
     environment:
-      POSTGRES_DB: concretizza
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: 4321
+      MYSQL_DATABASE: concretizza
+      MYSQL_ROOT_PASSWORD: 4321
     ports:
-      - "5432:5432"
+      - 3306:3306
     volumes:
-      - db:/var/lib/postgresql/data
+      - db:/var/lib/mysql
     networks:
       - net
 
