@@ -21,6 +21,11 @@ trait Hierarchy
         return User::factory()->for($this->createAccount())->create();
     }
 
+    public function createUserWithAccount(Account $account): User
+    {
+        return User::factory()->for($account)->create();
+    }
+
     public function createSubscription(Account $account): Subscription
     {
         return Subscription::factory()->for($account)->create();

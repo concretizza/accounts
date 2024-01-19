@@ -145,4 +145,31 @@ class UserTest extends TestCase
                 fn (AssertableJson $json) => $json->has('users.data', 2)
             );
     }
+
+    public function test_user_show_member(): void
+    {
+        $account = $this->createAccount();
+        $user = $this->createUserWithAccount($account);
+        $anotherUser = $this->createUserWithAccount($account);
+        $response = $this->actingAs($user)->json('GET', '/api/users/'.$anotherUser->id);
+        $response->assertStatus(Response::HTTP_OK);
+        $response->assertJson(
+            fn (AssertableJson $json) => $json->has('user', fn (AssertableJson $json) => $json->has('id')
+                ->where('name', $anotherUser->name)
+                ->where('email', $anotherUser->email)
+                ->where('account_id', $account->id)
+                ->has('email_verified_at')
+                ->has('created_at')
+                ->has('updated_at')
+            )
+        );
+    }
+
+    public function test_user_not_member(): void
+    {
+        $user = $this->createUser();
+        $anotherUser = $this->createUser();
+        $response = $this->actingAs($user)->json('GET', '/api/users/'.$anotherUser->id);
+        $response->assertStatus(Response::HTTP_FORBIDDEN);
+    }
 }

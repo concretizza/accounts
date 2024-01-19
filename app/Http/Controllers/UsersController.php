@@ -12,7 +12,6 @@ use App\Services\UserEmailVerificationService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -31,9 +30,16 @@ class UsersController extends Controller
         ]);
     }
 
-    public function show()
+    public function show(Request $request, int $id)
     {
-        return User::findOrFail(Auth::user()->id);
+        $user = User::findOrFail($id);
+        if ($request->user()->cannot('view', $user)) {
+            return response()->json([
+                'message' => trans('auth.forbidden'),
+            ], Response::HTTP_FORBIDDEN);
+        }
+
+        return response()->json(['user' => $user]);
     }
 
     public function register(UserRegisterRequest $request)
