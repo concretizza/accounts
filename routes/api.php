@@ -3,8 +3,9 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Payments\StripeCustomersController;
+use App\Http\Controllers\Payments\StripeSubscriptionCancelsController;
 use App\Http\Controllers\Payments\StripeSubscriptionCheckoutsController;
-use App\Http\Controllers\Payments\StripeSubscriptionsController;
+use App\Http\Controllers\Payments\StripeSubscriptionRefundsController;
 use App\Http\Controllers\Payments\StripeWebHooksController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\UsersMeController;
@@ -38,7 +39,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
         StripeSubscriptionCheckoutsController::class, 'create',
     ]);
     Route::post('/payments/stripe/subscriptions/{id}/refunds', [
-        StripeSubscriptionsController::class, 'refund',
+        StripeSubscriptionRefundsController::class, 'create',
     ]);
 
     Route::get('/users/me', [UsersMeController::class, 'show']);
@@ -51,7 +52,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
             StripeCustomersController::class, 'dashboard',
         ]);
         Route::delete('/payments/stripe/subscriptions/{id}', [
-            StripeSubscriptionsController::class, 'cancel',
+            StripeSubscriptionCancelsController::class, 'destroy',
         ]);
     });
 });

@@ -34,11 +34,16 @@ class AuthenticationTest extends TestCase
 
         $response->assertStatus(Response::HTTP_CREATED);
 
-        Mail::assertQueued(UserRegisteredMail::class, function (UserRegisteredMail $mail) use ($user, $response) {
+        Mail::assertQueued(UserRegisteredMail::class, function (
+            UserRegisteredMail $mail,
+        ) use ($user, $response) {
             $id = $response['user']['id'];
             $response = $this->json('GET', '/api/verify/'.$mail->verification);
 
-            $response->assertJson(fn (AssertableJson $json) => $json->where('message', trans('user.verify_success')));
+            $response->assertJson(
+                fn (AssertableJson $json) => $json->where('message', trans('user.verify_success'),
+                ),
+            );
 
             $userCreated = User::findOrFail($id);
             $this->assertNotNull($userCreated->email_verified_at);
@@ -77,9 +82,13 @@ class AuthenticationTest extends TestCase
 
         $response->assertStatus(Response::HTTP_OK);
 
-        $response->assertJson(fn (AssertableJson $json) => $json->where('message', trans('passwords.sent')));
+        $response->assertJson(
+            fn (AssertableJson $json) => $json->where('message', trans('passwords.sent')),
+        );
 
-        Notification::assertSentTo($user, PasswordResetNotification::class, function (PasswordResetNotification $notification) use ($user) {
+        Notification::assertSentTo($user, PasswordResetNotification::class, function (
+            PasswordResetNotification $notification,
+        ) use ($user) {
             $response = $this->json('POST', '/api/reset', [
                 'id' => Crypt::encryptString($user->id),
                 'password' => '12345678',
@@ -88,7 +97,9 @@ class AuthenticationTest extends TestCase
             ]);
 
             $response->assertStatus(Response::HTTP_OK);
-            $response->assertJson(fn (AssertableJson $json) => $json->where('message', trans('passwords.reset')));
+            $response->assertJson(
+                fn (AssertableJson $json) => $json->where('message', trans('passwords.reset')),
+            );
 
             return true;
         });
@@ -109,7 +120,9 @@ class AuthenticationTest extends TestCase
 
         $accessToken = $response['access_token'];
 
-        $response = $this->withHeaders(['Authorization' => 'Bearer '.$accessToken])->get('/api/users/me');
+        $response = $this->withHeaders([
+            'Authorization' => 'Bearer '.$accessToken,
+        ])->get('/api/users/me');
         $response->assertStatus(Response::HTTP_OK);
 
         $user = $user->refresh();

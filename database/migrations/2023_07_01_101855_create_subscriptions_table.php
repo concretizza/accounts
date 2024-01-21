@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('stripe_id')->unique();
             $table->string('stripe_status');
             $table->string('stripe_price');
+            $table->string('custom_status')->nullable();
             $table->timestamp('ends_at')->nullable();
             $table->timestamps();
             $table->softDeletes();

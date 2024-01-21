@@ -17,6 +17,7 @@ class Subscription extends Model
         'stripe_id',
         'stripe_status',
         'stripe_price',
+        'custom_status',
         'ends_at',
     ];
 
