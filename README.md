@@ -2,7 +2,7 @@
 
 ## Docs
 
-The API definition can be find on folder [docs](./docs)
+The API definition can be found in the [docs](./docs) folder.
 
 ## Environment variables
 
