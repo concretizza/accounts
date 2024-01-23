@@ -1,0 +1,48 @@
+openapi: 3.0.3
+info:
+  title: "Concretizza API"
+  version: 1.0.0
+  description: "Concretizza API"
+servers:
+  - url: http://localhost:8000/api
+security:
+  - bearerAuth: []
+paths:
+  /register:
+    $ref: "./paths/register.yaml"
+  /login:
+    $ref: "./paths/login.yaml"
+  /recover:
+    $ref: "./paths/recover.yaml"
+  /reset:
+    $ref: "./paths/reset.yaml"
+  /verify/{token}:
+    $ref: "./paths/verify.yaml"
+  /users:
+    $ref: "./paths/users.yaml"
+  /users/me:
+    $ref: "./paths/me.yaml"
+  /users/{userId}:
+    $ref: "./paths/user.yaml"
+  /accounts/{accountId}:
+    $ref: "./paths/account.yaml"
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    Account:
+      $ref: "./components/schemas/account.yaml"
+    DateTime:
+      $ref: "./components/schemas/datetime.yaml"
+    User:
+      $ref: "./components/schemas/user.yaml"
+    Pagination:
+      $ref: "./components/schemas/pagination.yaml"
+    Login:
+      $ref: "./components/schemas/login.yaml"
+    Register:
+      $ref: "./components/schemas/register.yaml"
+    Recover:
+      $ref: "./components/schemas/recover.yaml"

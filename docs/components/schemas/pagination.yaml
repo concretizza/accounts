@@ -1,0 +1,44 @@
+type: object
+properties:
+  current_page:
+    type: integer
+  first_page_url:
+    type: string
+    format: uri
+  from:
+    type: integer
+  last_page:
+    type: integer
+  last_page_url:
+    type: string
+    format: uri
+  links:
+    type: array
+    items:
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+          nullable: true
+        label:
+          type: string
+        active:
+          type: boolean
+  next_page_url:
+    type: string
+    format: uri
+    nullable: true
+  path:
+    type: string
+    format: uri
+  per_page:
+    type: integer
+  prev_page_url:
+    type: string
+    format: uri
+    nullable: true
+  to:
+    type: integer
+  total:
+    type: integer

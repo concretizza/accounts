@@ -1,5 +1,9 @@
 {
-    "cSpell.words": ["Assertable", "Mailpit"],
+    "cSpell.words": [
+        "Assertable",
+        "datetime",
+        "Mailpit"
+    ],
     "editor.rulers": [
         {
             "column": 80,

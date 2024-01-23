@@ -1,0 +1,20 @@
+post:
+  summary: Recover user access
+  operationId: recover
+  tags:
+    - Auth
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../components/schemas/recover.yaml"
+  responses:
+    "201":
+      description: Success
+    "400":
+      description: Bad request
+    "401":
+      description: Unauthorized
+    "403":
+      description: Forbidden

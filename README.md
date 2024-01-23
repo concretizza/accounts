@@ -1,5 +1,9 @@
 # Concretizza
 
+## Docs
+
+The API definition can be find on folder [docs](./docs)
+
 ## Environment variables
 
 :warning: Create `.env` file from the `.env.example`

@@ -1,0 +1,14 @@
+type: object
+properties:
+  email:
+    type: string
+    format: email
+    description: Email address of the user.
+  password:
+    type: string
+    format: password
+    nullable: true
+    description: Password for the user.
+required:
+  - email
+  - password

@@ -1,0 +1,85 @@
+get:
+  summary: Get account by ID
+  operationId: getAccountById
+  tags:
+    - Accounts
+  parameters:
+    - name: accountId
+      in: path
+      required: true
+      schema:
+        type: integer
+        format: int64
+  responses:
+    "200":
+      description: Success
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "../components/schemas/account.yaml"
+              - $ref: "../components/schemas/datetime.yaml"
+    "400":
+      description: Bad request
+    "401":
+      description: Unauthorized
+    "403":
+      description: Forbidden
+    "404":
+      description: Not found
+put:
+  summary: Update account
+  operationId: updateAccount
+  tags:
+    - Accounts
+  parameters:
+    - name: accountId
+      in: path
+      required: true
+      schema:
+        type: integer
+        format: int64
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../components/schemas/account.yaml"
+  responses:
+    "200":
+      description: Success
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "../components/schemas/account.yaml"
+              - $ref: "../components/schemas/datetime.yaml"
+    "400":
+      description: Bad request
+    "401":
+      description: Unauthorized
+    "403":
+      description: Forbidden
+    "404":
+      description: Not found
+delete:
+  summary: Delete account
+  operationId: deleteAccount
+  tags:
+    - Accounts
+  parameters:
+    - name: accountId
+      in: path
+      required: true
+      schema:
+        type: integer
+        format: int64
+  responses:
+    "204":
+      description: No content
+    "401":
+      description: Unauthorized
+    "403":
+      description: Forbidden
+    "404":
+      description: Not found

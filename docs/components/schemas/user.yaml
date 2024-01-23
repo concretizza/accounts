@@ -1,0 +1,29 @@
+type: object
+properties:
+  id:
+    type: integer
+    format: int64
+    description: Unique identifier for the user.
+  account_id:
+    type: integer
+    format: int64
+    description: Refers to the account owner.
+  name:
+    type: string
+    nullable: true
+    description: Name of the user.
+  email:
+    type: string
+    format: email
+    description: Email address of the user.
+  password:
+    type: string
+    format: password
+    nullable: true
+    description: Password for the user.
+  role:
+    type: string
+    enum: [viewer, editor, admin]
+    description: Role contains user permissions.
+required:
+  - email

@@ -1,0 +1,555 @@
+openapi: 3.0.3
+info:
+  title: Concretizza API
+  version: 1.0.0
+  description: Concretizza API
+servers:
+  - url: 'http://localhost:8000/api'
+security:
+  - bearerAuth: []
+paths:
+  /register:
+    post:
+      summary: Register new user
+      operationId: registerUser
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Register'
+      responses:
+        '201':
+          description: Success
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /login:
+    post:
+      summary: Login
+      operationId: login
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Login'
+      responses:
+        '201':
+          description: Success
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /recover:
+    post:
+      summary: Recover user access
+      operationId: recover
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Recover'
+      responses:
+        '201':
+          description: Success
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /reset:
+    post:
+      summary: Reset user password
+      operationId: resetPassword
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                  description: Encrypted unique identifier for the user.
+                token:
+                  type: string
+                  description: Token for reset password.
+                password:
+                  type: string
+                  format: password
+                  nullable: true
+                  description: Password for the user.
+                password_confirmation:
+                  type: string
+                  format: password
+                  nullable: true
+                  description: Password confirmation for the user.
+              required:
+                - id
+                - token
+                - email
+                - password
+                - password_confirmation
+      responses:
+        '201':
+          description: Success
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  '/verify/{token}':
+    get:
+      summary: Verify user account
+      operationId: verifyUserAccount
+      tags:
+        - Auth
+      parameters:
+        - name: token
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+  /users:
+    get:
+      summary: List users
+      operationId: listUser
+      tags:
+        - Users
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  users:
+                    allOf:
+                      - $ref: '#/components/schemas/Pagination'
+                      - type: object
+                        properties:
+                          data:
+                            type: array
+                            items:
+                              allOf:
+                                - $ref: '#/components/schemas/User'
+                                - $ref: '#/components/schemas/DateTime'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+    post:
+      summary: Create new user
+      operationId: createUser
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/User'
+                  - $ref: '#/components/schemas/DateTime'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /users/me:
+    get:
+      summary: Get logged user
+      operationId: getLoggedUser
+      tags:
+        - Users
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/User'
+                  - $ref: '#/components/schemas/DateTime'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+  '/users/{userId}':
+    get:
+      summary: Get user by ID
+      operationId: getUserById
+      tags:
+        - Users
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/User'
+                  - $ref: '#/components/schemas/DateTime'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+    put:
+      summary: Update user
+      operationId: updateUser
+      tags:
+        - Users
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/User'
+                  - $ref: '#/components/schemas/DateTime'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+    delete:
+      summary: Delete user
+      operationId: deleteUser
+      tags:
+        - Users
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: No content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+  '/accounts/{accountId}':
+    get:
+      summary: Get account by ID
+      operationId: getAccountById
+      tags:
+        - Accounts
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Account'
+                  - $ref: '#/components/schemas/DateTime'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+    put:
+      summary: Update account
+      operationId: updateAccount
+      tags:
+        - Accounts
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Account'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Account'
+                  - $ref: '#/components/schemas/DateTime'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+    delete:
+      summary: Delete account
+      operationId: deleteAccount
+      tags:
+        - Accounts
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: No content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    Account:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Unique identifier for the account.
+        title:
+          type: string
+          nullable: true
+          description: Title of the account.
+        icon:
+          type: string
+          nullable: true
+          description: Path location to the account's icon.
+    DateTime:
+      type: object
+      properties:
+        created_at:
+          type: string
+          format: date-time
+          description: The date and time when it was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: The date and time when it was last updated.
+      required:
+        - created_at
+        - updated_at
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Unique identifier for the user.
+        account_id:
+          type: integer
+          format: int64
+          description: Refers to the account owner.
+        name:
+          type: string
+          nullable: true
+          description: Name of the user.
+        email:
+          type: string
+          format: email
+          description: Email address of the user.
+        password:
+          type: string
+          format: password
+          nullable: true
+          description: Password for the user.
+        role:
+          type: string
+          enum:
+            - viewer
+            - editor
+            - admin
+          description: Role contains user permissions.
+      required:
+        - email
+    Pagination:
+      type: object
+      properties:
+        current_page:
+          type: integer
+        first_page_url:
+          type: string
+          format: uri
+        from:
+          type: integer
+        last_page:
+          type: integer
+        last_page_url:
+          type: string
+          format: uri
+        links:
+          type: array
+          items:
+            type: object
+            properties:
+              url:
+                type: string
+                format: uri
+                nullable: true
+              label:
+                type: string
+              active:
+                type: boolean
+        next_page_url:
+          type: string
+          format: uri
+          nullable: true
+        path:
+          type: string
+          format: uri
+        per_page:
+          type: integer
+        prev_page_url:
+          type: string
+          format: uri
+          nullable: true
+        to:
+          type: integer
+        total:
+          type: integer
+    Login:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          description: Email address of the user.
+        password:
+          type: string
+          format: password
+          nullable: true
+          description: Password for the user.
+      required:
+        - email
+        - password
+    Register:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          description: Email address of the user.
+        password:
+          type: string
+          format: password
+          nullable: true
+          description: Password for the user.
+        password_confirmation:
+          type: string
+          format: password
+          nullable: true
+          description: Password confirmation for the user.
+      required:
+        - email
+        - password
+        - password_confirmation
+    Recover:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          description: Email address of the user.
+      required:
+        - email

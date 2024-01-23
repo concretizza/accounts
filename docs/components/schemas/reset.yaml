@@ -1,0 +1,24 @@
+type: object
+properties:
+  id:
+    type: string
+    description: Encrypted unique identifier for the user.
+  token:
+    type: string
+    description: Token for reset password.
+  password:
+    type: string
+    format: password
+    nullable: true
+    description: Password for the user.
+  password_confirmation:
+    type: string
+    format: password
+    nullable: true
+    description: Password confirmation for the user.
+required:
+  - id
+  - token
+  - email
+  - password
+  - password_confirmation

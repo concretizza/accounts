@@ -1,0 +1,29 @@
+get:
+  summary: Get logged user
+  operationId: getLoggedUser
+  tags:
+    - Users
+  parameters:
+    - name: userId
+      in: path
+      required: true
+      schema:
+        type: integer
+        format: int64
+  responses:
+    "200":
+      description: Success
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "../components/schemas/user.yaml"
+              - $ref: "../components/schemas/datetime.yaml"
+    "400":
+      description: Bad request
+    "401":
+      description: Unauthorized
+    "403":
+      description: Forbidden
+    "404":
+      description: Not found

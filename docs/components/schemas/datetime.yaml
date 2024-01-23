@@ -1,0 +1,13 @@
+type: object
+properties:
+  created_at:
+    type: string
+    format: date-time
+    description: The date and time when it was created.
+  updated_at:
+    type: string
+    format: date-time
+    description: The date and time when it was last updated.
+required:
+  - created_at
+  - updated_at
