@@ -428,6 +428,120 @@ paths:
           description: Forbidden
         '404':
           description: Not found
+  /payments/stripe/checkouts/subscriptions:
+    post:
+      summary: Create new subscription
+      operationId: subscriptionCreate
+      tags:
+        - Payments
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                price_id:
+                  type: string
+                  description: Stripe's price id.
+              required:
+                - price_id
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  url:
+                    type: string
+                    description: Stripe's checkout URL.
+                required:
+                  - url
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  '/payments/stripe/subscriptions/{id}/refunds':
+    post:
+      summary: Refund subscription payment
+      operationId: subscriptionRefund
+      tags:
+        - Payments
+      parameters:
+        - name: subscriptionId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Success
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  '/payments/stripe/subscriptions/{id}':
+    delete:
+      summary: Cancel subscription
+      operationId: subscriptionCancel
+      tags:
+        - Payments
+      parameters:
+        - name: subscriptionId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Success
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /payments/stripe/customers/dashboard:
+    post:
+      summary: Create dashboard link
+      operationId: createDashboardLink
+      tags:
+        - Payments
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  url:
+                    type: string
+                    description: Stripe's dashboard URL.
+                required:
+                  - url
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
 components:
   securitySchemes:
     bearerAuth:

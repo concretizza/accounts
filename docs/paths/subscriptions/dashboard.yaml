@@ -1,0 +1,26 @@
+post:
+  summary: Create dashboard link
+  operationId: createDashboardLink
+  tags:
+    - Payments
+  security:
+    - bearerAuth: []
+  responses:
+    "201":
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              url:
+                type: string
+                description: Stripe's dashboard URL.
+            required:
+              - url
+    "400":
+      description: Bad request
+    "401":
+      description: Unauthorized
+    "403":
+      description: Forbidden

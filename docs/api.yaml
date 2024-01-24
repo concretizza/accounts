@@ -26,6 +26,14 @@ paths:
     $ref: "./paths/user.yaml"
   /accounts/{accountId}:
     $ref: "./paths/account.yaml"
+  /payments/stripe/checkouts/subscriptions:
+    $ref: "./paths/subscriptions/create.yaml"
+  /payments/stripe/subscriptions/{id}/refunds:
+    $ref: "./paths/subscriptions/refund.yaml"
+  /payments/stripe/subscriptions/{id}:
+    $ref: "./paths/subscriptions/cancel.yaml"
+  /payments/stripe/customers/dashboard:
+    $ref: "./paths/subscriptions/dashboard.yaml"
 components:
   securitySchemes:
     bearerAuth:

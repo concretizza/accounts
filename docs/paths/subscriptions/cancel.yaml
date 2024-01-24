@@ -1,0 +1,23 @@
+delete:
+  summary: Cancel subscription
+  operationId: subscriptionCancel
+  tags:
+    - Payments
+  parameters:
+    - name: subscriptionId
+      in: path
+      required: true
+      schema:
+        type: integer
+        format: int64
+  security:
+    - bearerAuth: []
+  responses:
+    "201":
+      description: Success
+    "400":
+      description: Bad request
+    "401":
+      description: Unauthorized
+    "403":
+      description: Forbidden
