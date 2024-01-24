@@ -3,6 +3,8 @@ get:
   operationId: listUser
   tags:
     - Users
+  security:
+    - bearerAuth: [] 
   responses:
     "200":
       description: Success
@@ -37,6 +39,8 @@ post:
       application/json:
         schema:
           $ref: "../components/schemas/user.yaml"
+  security:
+    - bearerAuth: [] 
   responses:
     "201":
       description: Success

@@ -10,6 +10,8 @@ get:
       schema:
         type: integer
         format: int64
+  security:
+    - bearerAuth: [] 
   responses:
     "200":
       description: Success

@@ -1,0 +1,16 @@
+delete:
+  summary: Logout
+  operationId: logout
+  tags:
+    - Auth
+  security:
+    - bearerAuth: [] 
+  responses:
+    "201":
+      description: Success
+    "400":
+      description: Bad request
+    "401":
+      description: Unauthorized
+    "403":
+      description: Forbidden
