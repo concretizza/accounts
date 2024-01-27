@@ -1,4 +1,9 @@
-# Concretizza
+# Accounts
+
+## Responsibilities
+
+- Users
+- Subscriptions
 
 ## Docs
 
