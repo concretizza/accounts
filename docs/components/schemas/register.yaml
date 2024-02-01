@@ -1,5 +1,8 @@
 type: object
 properties:
+  name:
+    type: string
+    description: Name of the user.
   email:
     type: string
     format: email
@@ -9,12 +12,7 @@ properties:
     format: password
     nullable: true
     description: Password for the user.
-  password_confirmation:
-    type: string
-    format: password
-    nullable: true
-    description: Password confirmation for the user.
 required:
+  - name
   - email
   - password
-  - password_confirmation
