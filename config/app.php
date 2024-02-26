@@ -187,4 +187,19 @@ return [
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Security
+    |--------------------------------------------------------------------------
+    |
+    | The algorithms and related aliases for managing access tokens.
+    |
+    */
+
+    'security' => [
+        'alg' => 'RS256',
+        'pri' => env('APP_SECURITY_PRIVATE_KEY'),
+        'pub' => env('APP_SECURITY_PUBLIC_KEY'),
+        'exp' => env('APP_SECURITY_TOKEN_EXPIRATION'),
+    ],
 ];

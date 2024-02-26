@@ -2,13 +2,12 @@
 
 namespace App\Http\Middleware;
 
-use App\Enums\AuthEnum;
 use App\Services\AccessTokenService;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class AuthCookie
+class AuthToken
 {
     /**
      * Handle an incoming request.
@@ -17,12 +16,16 @@ class AuthCookie
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (! $request->header('Authorization')) {
-            $cookieValue = $request->cookie(AuthEnum::COOKIE->value);
+        if ($request->header('Authorization')) {
+            $token = $request->bearerToken();
 
-            if ($cookieValue) {
-                $accessToken = AccessTokenService::decode($cookieValue);
-                $request->headers->set('Authorization', 'Bearer '.$accessToken->tok);
+            try {
+                $accessToken = AccessTokenService::decode($token);
+                $request->headers->set('Authorization', 'Bearer ' . $accessToken->tok);
+            } catch (\Exception $e) {
+                return response()->json([
+                    'message' => trans('auth.invalid'),
+                ], Response::HTTP_UNAUTHORIZED);
             }
         }
 

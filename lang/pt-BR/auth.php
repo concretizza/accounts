@@ -19,5 +19,6 @@ return [
     'verified' => 'Sua conta não está verificada. Por favor, verifique o e-mail que enviamos para você.',
     'logout' => 'Você saiu com sucesso.',
     'forbidden' => 'Você não tem acesso a este recurso.',
+    'invalid' => 'O token de acesso é inválido.',
 
 ];

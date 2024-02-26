@@ -18,6 +18,6 @@ return [
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
     'verified' => 'Your account is not verified, please check the e-mail we sent to you.',
     'logout' => 'You have successfully logout',
-    'forbidden' => 'You do not have access this resource',
-
+    'forbidden' => 'You do not have access this resource.',
+    'invalid' => 'The access token is invalid.',
 ];

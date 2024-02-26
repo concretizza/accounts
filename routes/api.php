@@ -31,7 +31,9 @@ Route::post('/payments/stripe/webhooks', [
     StripeWebHooksController::class, 'handle',
 ]);
 
-Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
+Route::group(['middleware' => [
+    'auth:sanctum', 'auth.token', 'auth.cookie', 'verified'],
+], function () {
     Route::get('/dashboard', [DashboardController::class, 'index']);
     Route::delete('/logout', [AuthController::class, 'logout']);
 

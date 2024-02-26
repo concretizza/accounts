@@ -61,10 +61,10 @@ class AuthenticationTest extends TestCase
         $response->assertStatus(Response::HTTP_OK);
 
         $response->assertJson(
-            fn (AssertableJson $json) => $json->has('id')
-                ->where('name', $user['name'])
-                ->where('email', $user['email'])
-                ->has('email_verified_at')
+            fn (AssertableJson $json) => $json->has('user.id')
+                ->where('user.name', $user['name'])
+                ->where('user.email', $user['email'])
+                ->has('user.email_verified_at')
                 ->has('access_token')
                 ->etc()
         );
