@@ -19,18 +19,20 @@ class AccessTokenService
             'aud' => config('app.url'),
             'iat' => $now,
             'exp' => $now + (int) config('app.security.exp'),
-            'sub' => $user->id,
-            'acc' => $user->account->id,
+            'sub' => $user->uuid,
+            'acc' => $user->account->uuid,
             'tok' => $tok,
         ];
 
         $privateKey = file_get_contents(config('app.security.pri'));
+
         return JWT::encode($accessToken, $privateKey, config('app.security.alg'));
     }
 
     public static function decode(string $tok)
     {
         $publicKey = file_get_contents(config('app.security.pub'));
+
         return JWT::decode($tok, new Key($publicKey, config('app.security.alg')));
     }
 }

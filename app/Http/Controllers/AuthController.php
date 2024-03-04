@@ -7,7 +7,6 @@ use App\Http\Requests\AuthenticationLoginRequest;
 use App\Models\User;
 use App\Services\AccessTokenService;
 use Carbon\Carbon;
-use Firebase\JWT\JWT;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Crypt;
@@ -21,13 +20,13 @@ class AuthController extends Controller
         $req = $request->only('email', 'password');
         $user = User::where('email', $req['email'])->first();
 
-        if (!$user || !Hash::check($req['password'], $user->password)) {
+        if (! $user || ! Hash::check($req['password'], $user->password)) {
             return response()->json([
                 trans('auth.failed'),
             ], Response::HTTP_UNAUTHORIZED);
         }
 
-        if (!$user->email_verified_at) {
+        if (! $user->email_verified_at) {
             return response()->json([
                 trans('auth.verified'),
             ], Response::HTTP_FORBIDDEN);
@@ -39,6 +38,7 @@ class AuthController extends Controller
 
         $accessToken = AccessTokenService::encode($user, $tok);
         $cookie = cookie(AuthEnum::COOKIE->value, $accessToken);
+
         return response()->json([
             'user' => $user->withoutRelations(),
             'access_token' => $accessToken,
@@ -94,7 +94,7 @@ class AuthController extends Controller
         );
 
         if ($status === Password::PASSWORD_RESET) {
-            if (!$user->email_verified_at) {
+            if (! $user->email_verified_at) {
                 $user->update(['email_verified_at' => Carbon::now()]);
             }
 

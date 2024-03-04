@@ -21,7 +21,7 @@ class AuthToken
 
             try {
                 $accessToken = AccessTokenService::decode($token);
-                $request->headers->set('Authorization', 'Bearer ' . $accessToken->tok);
+                $request->headers->set('Authorization', 'Bearer '.$accessToken->tok);
             } catch (\Exception $e) {
                 return response()->json([
                     'message' => trans('auth.invalid'),
