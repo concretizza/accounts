@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\AccountSettingsEnum;
+use App\Events\UserCreated;
 use App\Http\Requests\UserRegisterRequest;
 use App\Mail\UserRegisteredMail;
 use App\Models\Account;
@@ -97,6 +98,8 @@ class UsersController extends Controller
                 $user->update([
                     'email_verified_at' => Carbon::now(),
                 ]);
+
+                event(new UserCreated($user));
 
                 return response()->json([
                     'message' => trans('user.verify_success'),

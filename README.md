@@ -193,3 +193,11 @@ Public key
 ```sh
 openssl rsa -pubout -in private_key.pem -out public_key.pem
 ```
+
+## Redis
+
+Check incoming messages
+
+```sh
+psubscribe *
+```
